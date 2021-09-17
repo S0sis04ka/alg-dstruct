@@ -16,6 +16,12 @@ struct Node
 	struct Node* next;
 };
 
+enum ReturnVals{
+	OK,
+	OUT_OF_MEMORY,
+	INVALID_ARGUMENTS
+};
+
 int compareDates(struct Date* date1, struct Date* date2) {
 	if (date1->year == date2->year) {
 		if (date1->month == date2->month) {
@@ -31,9 +37,16 @@ int compareDates(struct Date* date1, struct Date* date2) {
 }
 
 int listAdd(struct Node** head, char* surname, char* name, char* fathersname, struct Date* dob) {
-
 	struct Node* cur = *head;
 	struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+	if (newNode == NULL) {
+			return OUT_OF_MEMORY;
+	}
+
+	if (surname == NULL || name == NULL || fathersname == NULL || dob == NULL) {
+		return INVALID_ARGUMENTS;
+	}
+
 	newNode->surname = surname;
 	newNode->name = name;
 	newNode->fathersname = fathersname;
@@ -42,7 +55,7 @@ int listAdd(struct Node** head, char* surname, char* name, char* fathersname, st
 	if (*head == NULL) {
 		*head = newNode;
 		(*head)->next = NULL;	
-		return 1;
+		return OK;
 	}
 
 	while (cur->next != NULL) {
@@ -53,25 +66,28 @@ int listAdd(struct Node** head, char* surname, char* name, char* fathersname, st
 	if (cur == *head && (compareDates(newNode->dob, cur->dob) < 0)) {
 		newNode->next = cur;
 		*head = newNode;
-		return 1;
+		return OK;
 	}
 
 	if (cur->next != NULL) {
 		newNode->next = cur->next;
 		cur->next = newNode;
-		return 1;
+		return OK;
 	}
 	else {
 		newNode->next = NULL;
 		cur->next = newNode;
-		return 1;
+		return OK;
 	}
-
-	return 0;
 }
 
 int printList(struct Node* head) {
 	struct Node* cur = head;
+
+	if (head == NULL) {
+		return INVALID_ARGUMENTS;
+	}
+
 	int count = 1;
 	printf("%d) %s %d.%d.%d\n", count, cur->surname,cur->dob->day, 
 									cur->dob->month, cur->dob->year);
@@ -84,10 +100,14 @@ int printList(struct Node* head) {
 		count++;
 	}
 	
-	return 1;
+	return OK;
 }
 
 int listSearch(struct Node* head, struct Date* date) {
+	if (head == NULL || date == NULL) {
+		return INVALID_ARGUMENTS;
+	}
+
 	struct Node* cur = head;
 
 	while (cur != NULL) {

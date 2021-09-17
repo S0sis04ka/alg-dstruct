@@ -17,6 +17,6 @@ struct Node
 };
 
 int compareDates(struct Date* date1, struct Date* date2);
-struct Node* listAdd(struct Node** head, char* surname, char* name, char* fathersname, struct Date* dob);
+int listAdd(struct Node** head, char* surname, char* name, char* fathersname, struct Date* dob);
 int printList(struct Node* head);
 int listSearch(struct Node* head, struct Date* date);
