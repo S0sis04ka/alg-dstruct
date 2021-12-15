@@ -104,7 +104,7 @@ TEST(functional_test, four_node_graph) {
     FILE* fout = fopen(OUTPUT_FILENAME, "r");
     char ans[MAX_CHAR] = {'\0'};
     fgets(ans, MAX_CHAR, fout);
-    EXPECT_TRUE(strcmp(ans, "1 2 3 2 ") == 0);
+    EXPECT_TRUE(strcmp(ans, "1 3 2 3 ") == 0);
 }
 
 TEST(functional_test, star) {

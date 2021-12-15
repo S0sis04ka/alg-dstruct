@@ -5,11 +5,12 @@ int color_graph(int** graph, int s, int* colors, int n, int k) {
     int count = 0;
     int ind = 0;
     queue[count] = s;
+    int* n_colors = (int*)malloc(sizeof(int) * n);
     while (ind <= count) {
         int v = queue[ind];
         ind++;
-        int* n_colors = (int*)malloc(sizeof(int) * n);
         for (int i = 0; i < n; i++) {
+            n_colors[i] = 0;
             if (graph[v][i] == 1) {
                 if (colors[i] == 0) {
                     count++;
